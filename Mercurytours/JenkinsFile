@@ -1,0 +1,22 @@
+pipeline {
+agent any 
+stages {
+stage('Build') {
+steps {
+git'https://github.com/vdespa-collab/java-rest-api-calculator.git'
+sh'./mvnm clean compiler'
+bat'./mvnm clean compiler'
+}
+}
+stage('Test') {
+steps {
+sh './mvn test'
+ bat './mvnm test'
+ }
+ post {
+ always {
+ junit'**/Drivers/reports/pom.xml'
+ }
+ }
+ }
+ }
